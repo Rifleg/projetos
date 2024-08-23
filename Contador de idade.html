@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Idade Detalhado com Vídeo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #idade {
+            font-size: 2em;
+            color: #007bff;
+        }
+        video {
+            margin-top: 20px;
+            max-width: 80%;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Estamos namorando a:</h1>
+<p>Dias incríveis: <span id="idade"></span></p>
+
+<!-- Adicionando o vídeo -->
+<video controls>
+    <source src="C:\Users\Pichau\Videos/Deb & Loide.mp4" type="video/mp4">
+    Seu navegador não suporta o elemento de vídeo.
+</video>
+
+<script>
+    function calcularIdadeDetalhada(dataNascimento) {
+        const agora = new Date();
+        
+        let anos = agora.getFullYear() - dataNascimento.getFullYear();
+        let meses = agora.getMonth() - dataNascimento.getMonth();
+        let dias = agora.getDate() - dataNascimento.getDate();
+        let horas = agora.getHours() - dataNascimento.getHours();
+        let minutos = agora.getMinutes() - dataNascimento.getMinutes();
+        let segundos = agora.getSeconds() - dataNascimento.getSeconds();
+        
+        // Ajustar meses negativos
+        if (meses < 0) {
+            anos--;
+            meses += 12;
+        }
+
+        // Ajustar dias negativos
+        if (dias < 0) {
+            meses--;
+            const ultimoDiaMesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
+            dias += ultimoDiaMesAnterior;
+        }
+
+        // Ajustar horas negativas
+        if (horas < 0) {
+            dias--;
+            horas += 24;
+        }
+
+        // Ajustar minutos negativos
+        if (minutos < 0) {
+            horas--;
+            minutos += 60;
+        }
+
+        // Ajustar segundos negativos
+        if (segundos < 0) {
+            minutos--;
+            segundos += 60;
+        }
+
+        return { anos, meses, dias, horas, minutos, segundos };
+    }
+
+    function atualizarIdade() {
+        const dataNascimento = new Date("2023-11-26T20:00:00"); // Substitua pela sua data de nascimento
+        const idadeDetalhada = calcularIdadeDetalhada(dataNascimento);
+
+        document.getElementById("idade").textContent = 
+            `${idadeDetalhada.anos} anos, ` +
+            `${idadeDetalhada.meses} meses, ` +
+            `${idadeDetalhada.dias} dias, ` +
+            `${idadeDetalhada.horas} horas, ` +
+            `${idadeDetalhada.minutos} minutos, ` +
+            `${idadeDetalhada.segundos} segundos`;
+    }
+
+    atualizarIdade();
+    setInterval(atualizarIdade, 1000); // Atualiza a idade a cada segundo
+</script>
+
+</body>
+</html>
